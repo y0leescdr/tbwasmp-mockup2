@@ -111,16 +111,49 @@
             grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
             gap: 24px;
         }
-        .store-card { background:#1e293b; border:1px solid #334155; border-radius:16px; padding:24px; box-shadow:0 8px 20px rgba(0,0,0,0.3); display: flex; flex-direction: column; }
-        .store-card .title { font-size:20px; font-weight:700; margin-bottom:6px; }
-        .store-card .score { font-size:16px; color:#60a5fa; font-weight:600; margin-bottom:16px; }
-        .store-card .section { margin-bottom:18px; }
-        .store-card .section h3 { font-size:14px; text-transform:uppercase; letter-spacing:0.08em; color:#93c5fd; margin-bottom:6px; }
-        .store-card .list { margin:0; padding-left:18px; }
-        .store-card .list li { margin:4px 0; font-size:14px; color:#e2e8f0; }
+        .store-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            /* --- FIX: Use Flexbox for vertical alignment --- */
+            display: flex;
+            flex-direction: column;
+        }
+        .store-card .title { font-size:20px; font-weight:700; margin: 0 0 4px; }
+        .store-card .score { font-size:16px; color:#60a5fa; font-weight:600; margin: 0 0 24px; }
+        .store-card .section { margin-bottom: 24px; }
+        .store-card .section h3 {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #93c5fd;
+            margin: 0 0 12px;
+            display: flex; /* Aligns icon with text */
+            align-items: center;
+            gap: 8px;
+        }
+        .store-card .list { margin:0; padding-left:20px; list-style: none; }
+        .store-card .list li { margin:8px 0; font-size:14px; color:#e2e8f0; position: relative; line-height: 1.5; }
+        .store-card .list li::before { content: '•'; color: var(--accent-blue); font-weight: bold; position: absolute; left: -20px; }
         .store-card .insight-text { font-size: 14px; color:#e2e8f0; line-height: 1.6;}
-        .store-card .action { background:#1e3a8a; border:1px solid #2563eb; border-radius:12px; padding:16px; margin-top: auto; }
-        .store-card .action h3 { color:#dbeafe; font-size:15px; margin-bottom:6px; }
+        .store-card .action {
+            background: #1e3a8a;
+            border: 1px solid #2563eb;
+            border-radius: 12px;
+            padding: 16px;
+            /* --- FIX: This pushes the action box to the bottom of the card --- */
+            margin-top: auto;
+        }
+        .store-card .action h3 {
+            color: #dbeafe;
+            font-size: 15px;
+            margin: 0 0 8px;
+            display: flex; /* Aligns icon with text */
+            align-items: center;
+            gap: 8px;
+        }
         .store-card .action p { margin:0; font-size:14px; color:#bfdbfe; line-height:1.5; }
 
         /* Responsive */
@@ -220,36 +253,63 @@
                     <div class="title">Use Case for JTI</div>
                     <div class="score">Target: Young Adult Market</div>
                     <div class="section">
-                      <h3>Insight</h3>
-                      <p class="insight-text">Hotspots near universities and BPO centers show a high concentration of adult students and young professionals. Data reveals low competitor visibility in the side-street stores they frequent after class or work.</p>
+                        <h3>Key Drivers</h3>
+                        <ul class="list">
+                            <li><strong>Foot Traffic:</strong> High density of adult students (2 universities nearby).</li>
+                            <li><strong>Competition:</strong> Low saturation of formal convenience stores in adjacent side-streets.</li>
+                            <li><strong>Demographics:</strong> Area dominated by young professionals (3 BPO centers).</li>
+                            <li><strong>Accessibility:</strong> Served by a major transit hub.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                      <h3>💡 Insight</h3>
+                      <p class="insight-text">This area shows a high concentration of your target demographic with low competitor visibility in the specific stores they frequent after class or work.</p>
                     </div>
                     <div class="action">
-                      <h3>Suggested Strategic Action</h3>
-                      <p>Deploy a "Trade Blitz Team" to these hotspots to ensure 100% stock availability and deploy compliant point-of-sale materials, capturing this valuable market segment.</p>
+                      <h3>🎯 Suggested Strategic Action</h3>
+                      <p>Deploy a "Trade Blitz Team" to these hotspots to ensure 100% stock availability and deploy compliant point-of-sale materials.</p>
                     </div>
                 </div>
                 <div class="store-card">
                     <div class="title">Use Case for Del Monte</div>
                     <div class="score">Target: Family Meal Planning</div>
                     <div class="section">
-                      <h3>Insight</h3>
-                      <p class="insight-text">Hotspots near public markets and dense residential subdivisions are frequented by families doing their weekly grocery shopping. These shoppers are likely to buy multiple items for home cooking.</p>
+                        <h3>Key Drivers</h3>
+                        <ul class="list">
+                           <li><strong>Foot Traffic:</strong> High density of shoppers near a major public market.</li>
+                           <li><strong>Competition:</strong> Underserved by major supermarkets.</li>
+                           <li><strong>Demographics:</strong> Area is a dense residential subdivision with a high concentration of families.</li>
+                           <li><strong>Accessibility:</strong> Main tricycle routes pass through the area.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                      <h3>💡 Insight</h3>
+                      <p class="insight-text">This area is frequented by families doing their weekly grocery shopping, making sari-sari stores a key channel for top-up purchases for home-cooked meals.</p>
                     </div>
                     <div class="action">
-                      <h3>Suggested Strategic Action</h3>
-                      <p>Run a "Bundling Promo" in the sari-sari stores within these hotspots. Offer a discount on Del Monte Tomato Sauce when purchased with pasta, targeting families planning their meals.</p>
+                      <h3>🎯 Suggested Strategic Action</h3>
+                      <p>Run a "Bundling Promo" in these hotspots. Offer a discount on Del Monte Tomato Sauce when purchased with pasta.</p>
                     </div>
                 </div>
                 <div class="store-card">
                     <div class="title">Use Case for Alaska</div>
                     <div class="score">Target: Neighborhood Breakfast</div>
+                     <div class="section">
+                        <h3>Key Drivers</h3>
+                        <ul class="list">
+                            <li><strong>Foot Traffic:</strong> High density of students and parents (4 elementary schools nearby).</li>
+                            <li><strong>Competition:</strong> The furthest residential zone from any major supermarket in the barangay.</li>
+                            <li><strong>Demographics:</strong> Area dominated by families with young children.</li>
+                            <li><strong>Accessibility:</strong> Multiple internal subdivision roads, less accessible to large delivery trucks.</li>
+                        </ul>
+                    </div>
                     <div class="section">
-                      <h3>Insight</h3>
-                      <p class="insight-text">Residential hotspots are underserved by major supermarkets, making sari-sari stores the primary source for daily needs like milk for breakfast ("baon" and coffee).</p>
+                      <h3>💡 Insight</h3>
+                      <p class="insight-text">This residential hotspot is underserved by major supermarkets, making local sari-sari stores the primary source for daily needs like milk for breakfast ("baon" and coffee).</p>
                     </div>
                     <div class="action">
-                      <h3>Suggested Strategic Action</h3>
-                      <p>Launch a "Neighborhood Nutrition" campaign. Ensure perfect placement and stock of Alaska products in these stores and provide owners with materials about the benefits of milk.</p>
+                      <h3>🎯 Suggested Strategic Action</h3>
+                      <p>Launch a "Neighborhood Nutrition" campaign. Ensure perfect placement and stock of Alaska products in these stores.</p>
                     </div>
                 </div>
             </div>
