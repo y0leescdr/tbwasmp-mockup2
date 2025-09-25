@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TBWA/SMP Workshop: Sari-Sari Intelligence Pilot</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #0f172a; /* Slate 900 */
+            --bg-container: #1e293b; /* Slate 800 */
+            --bg-panel: #0f172a; /* Slate 900 */
+            --border-color: #334155; /* Slate 700 */
+            --text-primary: #f1f5f9; /* Slate 100 */
+            --text-secondary: #cbd5e1; /* Slate 300 */
+            --text-light: #94a3b8; /* Slate 400 */
+            --accent-blue: #3b82f6;
+            --accent-green: #22c55e;
+            --accent-red: #ef4444;
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+        }
+        * { box-sizing: border-box; scroll-behavior: smooth; }
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+        }
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+        
+        /* --- Navigation --- */
+        .top-nav {
+            position: sticky;
+            top: 0;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin: 0 -24px 24px -24px;
+        }
+        .top-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+        .top-nav a:hover {
+            color: var(--text-primary);
+            background-color: rgba(51, 65, 85, 0.5);
+        }
+
+        /* --- Page Sections --- */
+        .page-section {
+            padding-top: 80px; /* Offset for sticky nav */
+            margin-top: -80px; /* Negative margin for anchor links */
+            margin-bottom: 64px;
+        }
+        .section-header { text-align: center; margin-bottom: 32px; }
+        .section-header h1 { font-size: 32px; margin: 0 0 8px; color: var(--text-primary); }
+        .section-header h2 { font-size: 28px; margin: 0 0 8px; color: var(--text-primary); }
+        .section-header p { font-size: 16px; color: var(--text-secondary); max-width: 700px; margin: 0 auto; line-height: 1.6;}
+
+        /* --- Dashboard Styles --- */
+        .dashboard-container { display: flex; flex-direction: column; width: 100%; height: 75vh; border: 1px solid var(--border-color); border-radius: 16px; overflow: hidden; }
+        .top-bar { background-color: var(--bg-container); padding: 16px 24px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+        .header-title { display: flex; align-items: center; gap: 16px; }
+        .header-title img { height: 40px; width: auto; }
+        .header-title h3 { font-size: 20px; margin: 0; }
+        .header-title .subtitle { font-size: 14px; color: var(--text-secondary); margin: 2px 0 0; }
+        .main-content { display: grid; grid-template-columns: 420px 1fr; gap: 0; flex-grow: 1; overflow: hidden; }
+        .left-panel, .map-panel { overflow: hidden; }
+        .left-panel { background-color: var(--bg-container); display: flex; flex-direction: column; padding: 24px; overflow-y: auto; }
+        .panel-section { margin-bottom: 24px; }
+        .panel-section-title { font-size: 16px; font-weight: 600; margin: 0 0 16px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; }
+        .kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .kpi-card .label { font-size: 13px; color: var(--text-secondary); margin-bottom: 4px; }
+        .kpi-card .value { font-size: 28px; font-weight: 700; color: var(--accent-blue); }
+        .kpi-card .value.light { color: var(--text-primary); }
+        .gemini-insight { background-color: #1e3a8a; border: 1px solid #2563eb; border-radius: 12px; padding: 20px; }
+        .gemini-insight .insight-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+        .gemini-insight .insight-header span { font-weight: 600; color: #dbeafe; }
+        .gemini-insight p { margin: 0; font-size: 14px; line-height: 1.6; color: #bfdbfe; }
+        .map-panel {
+            position: relative;
+            background-image: url('heatmap.png');
+            background-size: cover;
+            background-position: center;
+        }
+        .opportunity-list-item { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 10px; transition: background-color 0.2s; cursor: pointer; }
+        .opportunity-list-item:hover { background-color: #334155; }
+        .opportunity-list-item .icon { font-size: 20px; }
+        .opportunity-list-item .name { font-weight: 500; font-size: 14px; }
+        .opportunity-list-item .score { font-size: 13px; color: var(--accent-green); margin-left: auto; font-weight: 600; }
+        
+        /* --- Store Card Styles --- */
+        .store-card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 24px;
+        }
+        .store-card { background:#1e293b; border:1px solid #334155; border-radius:16px; padding:24px; box-shadow:0 8px 20px rgba(0,0,0,0.3); display: flex; flex-direction: column; }
+        .store-card .title { font-size:20px; font-weight:700; margin-bottom:6px; }
+        .store-card .score { font-size:16px; color:#60a5fa; font-weight:600; margin-bottom:16px; }
+        .store-card .section { margin-bottom:18px; }
+        .store-card .section h3 { font-size:14px; text-transform:uppercase; letter-spacing:0.08em; color:#93c5fd; margin-bottom:6px; }
+        .store-card .list { margin:0; padding-left:18px; }
+        .store-card .list li { margin:4px 0; font-size:14px; color:#e2e8f0; }
+        .store-card .insight-text { font-size: 14px; color:#e2e8f0; line-height: 1.6;}
+        .store-card .action { background:#1e3a8a; border:1px solid #2563eb; border-radius:12px; padding:16px; margin-top: auto; }
+        .store-card .action h3 { color:#dbeafe; font-size:15px; margin-bottom:6px; }
+        .store-card .action p { margin:0; font-size:14px; color:#bfdbfe; line-height:1.5; }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main-content { grid-template-columns: 1fr; }
+            .dashboard-container { height: auto; }
+            .map-panel { min-height: 40vh; }
+        }
+        @media (max-width: 768px) {
+            .top-bar { flex-direction: column; align-items: flex-start; gap: 16px; }
+            .top-nav { gap: 8px; padding: 12px; margin: 0 -24px 24px -24px; }
+            .top-nav a { font-size: 12px; padding: 6px 8px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="top-nav">
+        <a href="#dashboard">1. The Opportunity Heatmap</a>
+        <a href="#store-card">2. Tailored Use Cases</a>
+    </nav>
+    <div class="main-container">
+
+        <div class="section-header">
+            <h1>A Workshop for TBWA/SMP's Tech Innovations Unit</h1>
+            <p>The Opportunity Hotspot Analysis: A low-risk first step to solve the sari-sari store "blind spot".</p>
+        </div>
+        
+        <section id="dashboard" class="page-section">
+            <div class="section-header">
+                <h2>1. The Big Picture: The Opportunity Heatmap</h2>
+                <p>We start with a macro view of the entire area. The pilot's deliverable is a dashboard that visualizes the "Opportunity Hotspots"—the specific neighborhoods with high demand and low competition, telling your clients exactly where to focus their efforts.</p>
+            </div>
+            <div class="dashboard-container">
+                <div class="top-bar">
+                    <div class="header-title">
+                        <img src="tbwasmp-logo.png" alt="TBWA/SMP Logo">
+                        <div>
+                            <h3>Opportunity Hotspot Analysis: <strong>Brgy. Batasan Hills, QC</strong></h3>
+                            <p class="subtitle">Pilot Concept for TBWA/SMP & JTI</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-content">
+                    <div class="left-panel">
+                        <div class="panel-section">
+                            <div class="kpi-grid">
+                                <div class="kpi-card">
+                                    <div class="label">Total Retail Points Mapped</div>
+                                    <div class="value">348</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="label">Identified Hotspots</div>
+                                    <div class="value light">42</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-section gemini-insight">
+                            <div class="insight-header">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9a9 9 0 1 1-9-9Z"></path></svg>
+                                <span>Gemini Strategic Insight</span>
+                            </div>
+                            <p>Analysis of 42 high-potential Hotspots reveals a pattern: areas near schools but further from main roads are significantly underserved. This suggests a key opportunity for JTI to capture the after-school market with targeted neighborhood promotions.</p>
+                        </div>
+                         <div class="panel-section">
+                            <h4 class="panel-section-title">Top Hotspot Areas</h4>
+                            <div class="opportunity-list">
+                                <div class="opportunity-list-item" onclick="document.getElementById('store-card').scrollIntoView();">
+                                    <div class="icon">🎯</div>
+                                    <div class="name">Area near Batasan Hills National HS</div>
+                                    <div class="score">Score: 92</div>
+                                </div>
+                                <div class="opportunity-list-item">
+                                    <div class="icon">🎯</div>
+                                    <div class="name">Zone near San Antonio De Padua Church</div>
+                                    <div class="score">Score: 89</div>
+                                </div>
+                                <div class="opportunity-list-item">
+                                    <div class="icon">🎯</div>
+                                    <div class="name">Cluster along IBP Road Side Streets</div>
+                                    <div class="score">Score: 85</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="map-panel"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="store-card" class="page-section">
+            <div class="section-header">
+                <h2>2. The Action Plan: Tailored Use Cases</h2>
+                <p>The heatmap identifies the "where." To help the strategy team brainstorm, here are a few tailored examples of the "what"—turning data into a concrete action plan for their specific clients.</p>
+            </div>
+            <div class="store-card-container">
+                <div class="store-card">
+                    <div class="title">Use Case for JTI</div>
+                    <div class="score">Target: Young Adult Market</div>
+                    <div class="section">
+                      <h3>Insight</h3>
+                      <p class="insight-text">Hotspots near universities and BPO centers show a high concentration of adult students and young professionals. Data reveals low competitor visibility in the side-street stores they frequent after class or work.</p>
+                    </div>
+                    <div class="action">
+                      <h3>Suggested Strategic Action</h3>
+                      <p>Deploy a "Trade Blitz Team" to these hotspots to ensure 100% stock availability and deploy compliant point-of-sale materials, capturing this valuable market segment.</p>
+                    </div>
+                </div>
+                <div class="store-card">
+                    <div class="title">Use Case for Del Monte</div>
+                    <div class="score">Target: Family Meal Planning</div>
+                    <div class="section">
+                      <h3>Insight</h3>
+                      <p class="insight-text">Hotspots near public markets and dense residential subdivisions are frequented by families doing their weekly grocery shopping. These shoppers are likely to buy multiple items for home cooking.</p>
+                    </div>
+                    <div class="action">
+                      <h3>Suggested Strategic Action</h3>
+                      <p>Run a "Bundling Promo" in the sari-sari stores within these hotspots. Offer a discount on Del Monte Tomato Sauce when purchased with pasta, targeting families planning their meals.</p>
+                    </div>
+                </div>
+                <div class="store-card">
+                    <div class="title">Use Case for Alaska</div>
+                    <div class="score">Target: Neighborhood Breakfast</div>
+                    <div class="section">
+                      <h3>Insight</h3>
+                      <p class="insight-text">Residential hotspots are underserved by major supermarkets, making sari-sari stores the primary source for daily needs like milk for breakfast ("baon" and coffee).</p>
+                    </div>
+                    <div class="action">
+                      <h3>Suggested Strategic Action</h3>
+                      <p>Launch a "Neighborhood Nutrition" campaign. Ensure perfect placement and stock of Alaska products in these stores and provide owners with materials about the benefits of milk.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // Smooth scroll for nav links
+        document.querySelectorAll('.top-nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
